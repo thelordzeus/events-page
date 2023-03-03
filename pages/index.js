@@ -5,7 +5,7 @@ import styles from "@/styles/Home.module.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function Home({ title }) {
+export default function Home({ data }) {
   return (
     <>
       <Head>
@@ -23,45 +23,25 @@ export default function Home({ title }) {
         </nav>
       </header>
       <main className={styles.main}>
-        <a href="/events/london">
-          <img />
-          <h2>Events in London</h2>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam
-            quae rerum reiciendis ipsum earum suscipit reprehenderit
-            praesentium, debitis eius corrupti iure nemo delectus omnis aut
-            asperiores exercitationem quasi consequatur expedita.
-          </p>
-        </a>
-        <a href="/events/sanFran">
-          <img />
-          <h2>Events in San fransisco</h2>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam
-            quae rerum reiciendis ipsum earum suscipit reprehenderit
-            praesentium, debitis eius corrupti iure nemo delectus omnis aut
-            asperiores exercitationem quasi consequatur expedita.
-          </p>
-        </a>
-        <a href="">
-          <img />
-          <h2>Events in Barcelona</h2>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam
-            quae rerum reiciendis ipsum earum suscipit reprehenderit
-            praesentium, debitis eius corrupti iure nemo delectus omnis aut
-            asperiores exercitationem quasi consequatur expedita.
-          </p>
-        </a>
+        {data.map((ev) => (
+          <a href={`/events/${ev.id}`} key={ev.id}>
+            <Image src={ev.image} alt={ev.title} width={200} height={150}/>
+            <h2>{ev.title}</h2>
+            <p>{ev.description}</p>
+          </a>
+        ))}
       </main>
     </>
   );
 }
 // this function will only run on the server side not on the client side
-export function getServerSideProps() {
+// always export as an stand alone function
+export async function getServerSideProps() {
+  const { events_categories } = await import("/data/data.json"); // requesting on the events_categories data from the data.json file
+
   return {
     props: {
-      title: "Hello Everyone",
+      data: events_categories,
     },
   };
 }
