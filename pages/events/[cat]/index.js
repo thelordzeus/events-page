@@ -1,15 +1,16 @@
 import Image from "next/image";
-export default function EventsCategoryPage({ data }) {
+import Link from "next/link";
+export default function EventsCategoryPage({ data, pageName }) {
   return (
     <>
-      <h1>Events in London</h1>
+      <h1>Events in {pageName}</h1>
 
       {data.map((ev) => (
-        <a href={`/events/${ev.city}/${ev.id}`} key={ev.id}>
+        <Link key={ev.id} href={`/events/${ev.city}/${ev.id}`} passHref={true}>
           <Image src={ev.image} alt={ev.title} width={200} height={200} />
           <h2>{ev.title}</h2>
           <p>{ev.description}</p>
-        </a>
+        </Link>
       ))}
     </>
   );
@@ -37,6 +38,7 @@ export async function getStaticProps(context) {
   return {
     props: {
       data,
+      pageName: id,
     },
   };
 }
