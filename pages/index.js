@@ -1,11 +1,8 @@
 import Head from "next/head";
 import Image from "next/image";
 import { Inter } from "@next/font/google";
-import styles from "@/styles/Home.module.css";
-import Link from "next/link";
+
 import HomePage from "@/components/home/home-page";
-import FooterPage from "@/components/footer/footer-page";
-import Header from "@/components/header/header-page";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -34,3 +31,5 @@ export async function getServerSideProps() {
     },
   };
 }
+
+
